@@ -37,7 +37,7 @@ public final class Parser {
         String dateReg = "^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})";
         //Pattern dateTimePattern = Pattern.compile(dateReg);
 
-        if (Pattern.matches(dateReg, line)) {
+        if (!Pattern.matches(dateReg, line)) {
             throw new IllegalArgumentException("The format of line is invalid!");
         } else {
 
