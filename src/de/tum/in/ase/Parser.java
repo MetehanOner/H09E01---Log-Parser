@@ -35,9 +35,9 @@ public final class Parser {
     public static @NonNull LocalDateTime extractDateTime(@NonNull String line) {
         // TODO Task 1.1: Implement the method to extract a date time.
         String dateReg = "^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})";
-        Pattern dateTimePattern = Pattern.compile(dateReg);
+        //Pattern dateTimePattern = Pattern.compile(dateReg);
 
-        if (!Pattern.matches(dateReg, line)) {
+        if (Pattern.matches(dateReg, line)) {
             throw new IllegalArgumentException("The format of line is invalid!");
         } else {
 
