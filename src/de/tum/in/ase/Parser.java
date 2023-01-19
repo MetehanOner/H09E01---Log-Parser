@@ -5,6 +5,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -37,12 +38,18 @@ public final class Parser {
         String dateReg = "/^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})/g";
         Pattern dateTimePattern = Pattern.compile(dateReg);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter f = new DateTimeFormatterBuilder()
+                .appendPattern("yyyy-MM-dd HH.mm.ss.SSSSSS")
+                .parseLenient()
+                .appendOffset("+HH:MM", "Z")
+                .toFormatter();
+
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         if (!dateTimePattern.matcher(line).matches()) {
-            throw new IllegalArgumentException(String.valueOf(LocalDateTime.parse(line, formatter)));
+            throw new IllegalArgumentException(String.valueOf(LocalDateTime.parse(line, f)));
         } else {
-            return LocalDateTime.parse(line, formatter);
+            return LocalDateTime.parse(line, f);
         }
 
     }
