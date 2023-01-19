@@ -39,12 +39,11 @@ public final class Parser {
 
         if (!dateTimePattern.matcher(line).matches()) {
             throw new IllegalArgumentException("The format of line is invalid!");
-        } else {
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-            return LocalDateTime.parse(line, formatter);
         }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(line, formatter);
+
 
     }
 
