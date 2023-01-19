@@ -34,7 +34,7 @@ public final class Parser {
      */
     public static @NonNull LocalDateTime extractDateTime(@NonNull String line) {
         // TODO Task 1.1: Implement the method to extract a date time.
-        String dateReg = "^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})";
+        String dateReg = "/^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})/g";
         Pattern dateTimePattern = Pattern.compile(dateReg);
 
         if (!dateTimePattern.matcher(line).matches()) {
