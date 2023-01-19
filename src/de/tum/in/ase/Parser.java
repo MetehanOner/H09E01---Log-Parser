@@ -37,11 +37,12 @@ public final class Parser {
         String dateReg = "/^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})/g";
         Pattern dateTimePattern = Pattern.compile(dateReg);
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         if (!dateTimePattern.matcher(line).matches()) {
-            throw new IllegalArgumentException(line);
+            throw new IllegalArgumentException(String.valueOf(LocalDateTime.parse(line, formatter)));
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.parse(line, formatter);
 
     }
