@@ -41,9 +41,9 @@ public final class Parser {
 
         if (!dateTimePattern.matcher(line).matches()) {
             throw new IllegalArgumentException(String.valueOf(LocalDateTime.parse(line, formatter)));
+        } else {
+            return LocalDateTime.parse(line, formatter);
         }
-
-        return LocalDateTime.parse(line, formatter);
 
     }
 
