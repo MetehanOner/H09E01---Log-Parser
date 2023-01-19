@@ -43,7 +43,8 @@ public final class Parser {
             throw new IllegalArgumentException(String.valueOf(LocalDateTime.parse(line, formatter)));
         } else {
 
-            return LocalDateTime.parse(line, formatter);
+            DateTimeFormatter former = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return LocalDateTime.parse(line, former);
         }
 
     }
