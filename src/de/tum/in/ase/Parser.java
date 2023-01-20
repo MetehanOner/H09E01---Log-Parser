@@ -133,7 +133,9 @@ public final class Parser {
      */
     public static @NonNull Log parseLine(@NonNull String line) {
         // TODO Task 2.1: Implement the method to parse one line of the log.
-        return new Log(LocalDateTime.now(), Level.DEBUG, "");
+
+        return new Log(extractDateTime(line), extractLevel(line), extractMessage(line));
+
     }
 
     /**
