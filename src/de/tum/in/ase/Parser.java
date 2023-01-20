@@ -159,7 +159,7 @@ public final class Parser {
             String strLine;
 
             while ((strLine = br.readLine()) != null) {
-
+                //added for git purposes
                 Log l = parseLine(strLine);
                 if (p.matcher(l.toString()).matches()) {
                     listLog.add(l);
