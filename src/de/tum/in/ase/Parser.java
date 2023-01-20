@@ -88,12 +88,16 @@ public final class Parser {
                 switch(next) {
                     case "[INFO]":
                         e = Level.INFO;
+                        break;
                     case "[DEBUG]":
                         e = Level.DEBUG;
+                        break;
                     case "[WARN]":
                         e = Level.WARN;
+                        break;
                     case "[ERROR]":
                         e = Level.ERROR;
+                        break;
                 }
             } else {
                 throw new IllegalArgumentException(line);
