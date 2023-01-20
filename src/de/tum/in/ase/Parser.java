@@ -4,9 +4,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
+import java.time.LocalTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.TemporalAccessor;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -22,27 +23,29 @@ public final class Parser {
      * Extract a date time from the given line of the log, and return it as {@link LocalDateTime}.
      * {@link DateTimeFormatter} would be useful for this task.
      * If it cannot the given line because of its invalid format, throw {@link IllegalArgumentException}
-     *
+     * <p>
      * The format should follow below.
      * - It should be `yyyy-MM-dd HH:mm:ss`.
      * - It is required to start from the beginning of the line.
-     *
+     * <p>
      * (e.g.) "INFO" from "2023-01-01 00:00:00 [INFO]: Happy New Year"
      *
-     * @param line  the line of the log
+     * @param line the line of the log
      * @return the extracted date time
      * @throws IllegalArgumentException if the format of the line is invalid.
      * @see LocalDateTime
      * @see DateTimeFormatter
      */
-    public static @NonNull LocalDateTime extractDateTime(@NonNull String line) {
+    public static Period extractDateTime(@NonNull String line) {
         // TODO Task 1.1: Implement the method to extract a date time.
         String dateReg = "^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2}) ";
         Matcher m = Pattern.compile(dateReg).matcher(line);
 
         if (m.find()) {
-            ZonedDateTime d = ZonedDateTime.parse(line);
-            return d.toLocalDateTime();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            TemporalAccessor parsed = formatter.parse(line);
+            LocalTime time = parsed.query(LocalTime::from);
+            return time.query(DateTimeFormatter.parsedExcessDays());
         } else {
             throw new IllegalArgumentException(line);
         }
