@@ -3,10 +3,12 @@ package de.tum.in.ase;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class Parser {
@@ -34,19 +36,15 @@ public final class Parser {
      */
     public static @NonNull LocalDateTime extractDateTime(@NonNull String line) {
         // TODO Task 1.1: Implement the method to extract a date time.
-        String dateReg = "^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})";
-        Pattern dateTimePattern = Pattern.compile(dateReg);
+        String dateReg = "^((\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2}))";
+        Matcher m = Pattern.compile(dateReg).matcher(line);
 
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        if (!dateTimePattern.matcher(line).matches()) {
-            throw new IllegalArgumentException(line);
+        if (m.find()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return LocalDateTime.parse(m.group(1), formatter);
         } else {
-
-            DateTimeFormatter former = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            return LocalDateTime.parse(line, former);
+            throw new IllegalArgumentException(line);
         }
-
     }
 
     /**
