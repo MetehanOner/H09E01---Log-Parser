@@ -3,12 +3,17 @@ package de.tum.in.ase;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParsePosition;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -155,26 +160,34 @@ public final class Parser {
         // TODO Task 2.2: Implement the method to parse the entire log file.
         List<Log> listLog = new ArrayList<>();
 
-        try {
-            FileInputStream fStream = new FileInputStream(fileName);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fStream));
-            String strLine;
+        List l = readFileInList(fileName);
 
-            while ((strLine = br.readLine()) != null) {
-
-                try {
-                    Log l = parseLine(strLine);
-                    listLog.add(l);
-                } catch (Exception e) {
-                    System.err.println("Error: " + e.getMessage());
-                }
-
+        Iterator<String> itr = l.iterator();
+        while (itr.hasNext())
+            try {
+                Log log = parseLine(itr.next());
+                listLog.add(log);
+            } catch (Exception e) {
+                System.err.println("Error: " + e.getMessage());
             }
-            fStream.close();
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
 
         return listLog;
+    }
+
+    public static List<String> readFileInList(String fileName)
+    {
+
+        List<String> lines = Collections.emptyList();
+        try
+        {
+            lines =
+                    Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
+        }
+
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return lines;
     }
 }
