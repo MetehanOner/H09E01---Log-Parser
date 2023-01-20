@@ -155,7 +155,7 @@ public final class Parser {
         // TODO Task 2.2: Implement the method to parse the entire log file.
         List<Log> listLog = new ArrayList<>();
 
-        try{
+        try {
             FileInputStream fStream = new FileInputStream(fileName);
             BufferedReader br = new BufferedReader(new InputStreamReader(fStream));
             String strLine;
