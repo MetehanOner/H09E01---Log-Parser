@@ -4,6 +4,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
@@ -40,7 +41,8 @@ public final class Parser {
 
         if (m.find()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            return LocalDateTime.parse(line, formatter);
+            OffsetDateTime odt = OffsetDateTime.parse ( line , formatter );
+            return odt.toLocalDateTime();
         } else {
             throw new IllegalArgumentException(line);
         }
