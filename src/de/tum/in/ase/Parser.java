@@ -9,8 +9,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,7 +78,29 @@ public final class Parser {
      */
     public static @NonNull Level extractLevel(@NonNull String line) {
         // TODO Task 1.2: Implement the method to extract a level.
-        return Level.DEBUG;
+        String dateReg = "\\[([A-Z]{4,5})\\]";
+        List<String> levelTest = Arrays.asList("[INFO]", "[DEBUG]", "[WARN]", "[ERROR]");
+        Pattern p = Pattern.compile(dateReg);
+
+        Level e = null;
+        for (String next: levelTest) {
+            if (p.matcher(next).find()) {
+                switch(next) {
+                    case "[INFO]":
+                        e = Level.INFO;
+                    case "[DEBUG]":
+                        e = Level.DEBUG;
+                    case "[WARN]":
+                        e = Level.WARN;
+                    case "[ERROR]":
+                        e = Level.ERROR;
+                }
+            } else {
+                throw new IllegalArgumentException(line);
+            }
+        }
+        assert e != null;
+        return e;
     }
 
     /**
