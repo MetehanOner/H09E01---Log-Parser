@@ -112,13 +112,13 @@ public final class Parser {
      */
     public static @NonNull String extractMessage(@NonNull String line) {
         // TODO Task 1.3: Implement the method to extract a message.
-        String messageReg = "(?<=\\]\\:).*$";
+        String messageReg = "(?<=]:).*$";
         Matcher m = Pattern.compile(messageReg).matcher(line);
-        StringBuilder s = new StringBuilder();
+        StringBuilder a = new StringBuilder();
         if (m.find()) {
-            return s.append(m.group(1)).toString();
+            return a.append(m.group(1)).toString();
         } else {
-            throw new IllegalArgumentException(m.group(1));
+            throw new IllegalArgumentException(line);
         }
     }
 
