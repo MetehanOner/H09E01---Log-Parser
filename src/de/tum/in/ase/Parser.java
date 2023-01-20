@@ -76,16 +76,16 @@ public final class Parser {
      */
     public static @NonNull Level extractLevel(@NonNull String line) {
         // TODO Task 1.2: Implement the method to extract a level.
-        String dateReg = "\\[([A-Z]{4,5})]";
+        String dateReg = "\\[([A-Z]{4,5})\\]";
         //List<String> levelTest = Arrays.asList("[INFO]", "[DEBUG]", "[WARN]", "[ERROR]");
         Matcher m = Pattern.compile(dateReg).matcher(line);
 
         if (m.find()) {
             Level l = switch (m.group(1)) {
-                case "[INFO]" -> Level.INFO;
-                case "[DEBUG]" -> Level.DEBUG;
-                case "[WARN]" -> Level.WARN;
-                case "[ERROR]" -> Level.ERROR;
+                case "INFO" -> Level.INFO;
+                case "DEBUG" -> Level.DEBUG;
+                case "WARN" -> Level.WARN;
+                case "ERROR" -> Level.ERROR;
                 default -> throw new IllegalArgumentException(m.group(1));
             };
             return l;
