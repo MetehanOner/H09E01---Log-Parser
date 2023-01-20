@@ -97,7 +97,7 @@ public final class Parser {
             case "[DEBUG]" -> Level.DEBUG;
             case "[WARN]" -> Level.WARN;
             case "[ERROR]" -> Level.ERROR;
-            default -> throw new IllegalArgumentException(line);
+            default -> throw new IllegalArgumentException(e.toString());
         };
         return l;
     }
