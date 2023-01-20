@@ -7,7 +7,6 @@ import java.text.ParsePosition;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.List;
@@ -47,15 +46,14 @@ public final class Parser {
             DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd ");
             DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-
             ParsePosition pp = new ParsePosition(0);
             LocalDate ld = LocalDate.from(formatter1.parse(line, pp));
             TemporalAccessor timePart = formatter2.parse(line, pp);
 
             LocalTime lt = LocalTime.from(timePart);
-            LocalDateTime dt = LocalDateTime.of(ld, lt);
 
-            return dt;
+            return LocalDateTime.of(ld, lt);
+
         } else {
             throw new IllegalArgumentException(line);
         }
