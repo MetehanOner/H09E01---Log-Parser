@@ -11,8 +11,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -135,9 +133,13 @@ public final class Parser {
      */
     public static @NonNull Log parseLine(@NonNull String line) {
         // TODO Task 2.1: Implement the method to parse one line of the log.
+        Pattern p = Pattern.compile("^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2}) \\[([A-Z]{4,5})\\]: .*$");
 
-        return new Log(extractDateTime(line), extractLevel(line), extractMessage(line));
-
+        if (p.matcher(line).matches()) {
+            return new Log(extractDateTime(line), extractLevel(line), extractMessage(line));
+        } else {
+            throw new IllegalArgumentException(line);
+        }
     }
 
     /**
@@ -152,18 +154,21 @@ public final class Parser {
     public static @NonNull List<Log> parseLogFile(@NonNull String fileName) throws IOException {
         // TODO Task 2.2: Implement the method to parse the entire log file.
         List<Log> listLog = new ArrayList<>();
-        Pattern p = Pattern.compile("^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2}) \\[([A-Z]{4,5})\\]: .*$");
+
         try{
-            FileInputStream fStream = new FileInputStream(fileName + ".log");
+            FileInputStream fStream = new FileInputStream(fileName);
             BufferedReader br = new BufferedReader(new InputStreamReader(fStream));
             String strLine;
 
             while ((strLine = br.readLine()) != null) {
-                //added for git purposes
-                Log l = parseLine(strLine);
-                if (p.matcher(l.toString()).matches()) {
+
+                try {
+                    Log l = parseLine(strLine);
                     listLog.add(l);
+                } catch (Exception e) {
+                    System.err.println("Error: " + e.getMessage());
                 }
+
             }
             fStream.close();
         } catch (Exception e) {

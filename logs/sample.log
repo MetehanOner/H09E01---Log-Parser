@@ -1,4 +1,8 @@
 2022-12-05 10:15:30 [INFO]: Starting application...
 2022-12-05 10:15:31 [DEBUG]: Initializing database connection...
+2022-12-05 10:15:34 [INVALID]: This is not a log but you parse it like a log so you are an idiot!!!
+2022-12-05 10:15:34 [INVALID]: This is not a log but you parse it like a log so you are an idiot!!!
 2022-12-05 10:15:33 [ERROR]: Failed to initialize database.
+2022-12-05 10:15:34 [INFO]: Shutting down application.
+2022-12-05 10:15:34 [INVALID]: This is not a log but you parse it like a log so you are an idiot!!!
 2022-12-05 10:15:34 [INFO]: Shutting down application.
