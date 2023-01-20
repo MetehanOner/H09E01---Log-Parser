@@ -114,9 +114,9 @@ public final class Parser {
         // TODO Task 1.3: Implement the method to extract a message.
         String messageReg = "(?<=\\]\\:).*$";
         Matcher m = Pattern.compile(messageReg).matcher(line);
-        String s = "";
+        StringBuilder s = new StringBuilder();
         if (m.find()) {
-            return s + m.group(1);
+            return s.append(m.group(1)).toString();
         } else {
             throw new IllegalArgumentException(m.group(1));
         }
