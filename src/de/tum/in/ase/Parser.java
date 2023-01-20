@@ -2,7 +2,7 @@ package de.tum.in.ase;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.io.IOException;
+import java.io.*;
 import java.text.ParsePosition;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,6 +11,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -149,6 +151,25 @@ public final class Parser {
      */
     public static @NonNull List<Log> parseLogFile(@NonNull String fileName) throws IOException {
         // TODO Task 2.2: Implement the method to parse the entire log file.
-        return new ArrayList<>();
+        List<Log> listLog = new ArrayList<>();
+        Pattern p = Pattern.compile("^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2}) \\[([A-Z]{4,5})\\] (?<=]: )(.*$)");
+        try{
+            FileInputStream fStream = new FileInputStream(fileName + ".log");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fStream));
+            String strLine;
+
+            while ((strLine = br.readLine()) != null) {
+
+                Log l = parseLine(strLine);
+                if (p.matcher(l.toString()).matches()) {
+                    listLog.add(l);
+                }
+            }
+            fStream.close();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+        return listLog;
     }
 }
