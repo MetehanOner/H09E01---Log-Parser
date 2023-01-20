@@ -9,10 +9,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -81,25 +79,19 @@ public final class Parser {
         String dateReg = "\\[([A-Z]{4,5})\\]";
         //List<String> levelTest = Arrays.asList("[INFO]", "[DEBUG]", "[WARN]", "[ERROR]");
         Matcher m = Pattern.compile(dateReg).matcher(line);
-        StringBuilder e = new StringBuilder();
 
         if (m.find()) {
-            String[] splitString = line.split(dateReg);
-            for (String string : splitString) {
-                e.append(string);
-            }
+            Level l = switch (m.group(1)) {
+                case "[INFO]" -> Level.INFO;
+                case "[DEBUG]" -> Level.DEBUG;
+                case "[WARN]" -> Level.WARN;
+                case "[ERROR]" -> Level.ERROR;
+                default -> throw new IllegalArgumentException(m.group(1));
+            };
+            return l;
         } else {
             throw new IllegalArgumentException(line);
         }
-
-        Level l = switch (e.toString()) {
-            case "[INFO]" -> Level.INFO;
-            case "[DEBUG]" -> Level.DEBUG;
-            case "[WARN]" -> Level.WARN;
-            case "[ERROR]" -> Level.ERROR;
-            default -> throw new IllegalArgumentException(e.toString());
-        };
-        return l;
     }
 
     /**
