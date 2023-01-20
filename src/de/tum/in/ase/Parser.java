@@ -3,7 +3,6 @@ package de.tum.in.ase;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -26,7 +25,7 @@ public final class Parser {
      * - It should be `yyyy-MM-dd HH:mm:ss`.
      * - It is required to start from the beginning of the line.
      *
-     * e.g.) "INFO" from "2023-01-01 00:00:00 [INFO]: Happy New Year"
+     * (e.g.) "INFO" from "2023-01-01 00:00:00 [INFO]: Happy New Year"
      *
      * @param line  the line of the log
      * @return the extracted date time
@@ -36,12 +35,12 @@ public final class Parser {
      */
     public static @NonNull LocalDateTime extractDateTime(@NonNull String line) {
         // TODO Task 1.1: Implement the method to extract a date time.
-        String dateReg = "^((\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2}))";
+        String dateReg = "^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})";
         Matcher m = Pattern.compile(dateReg).matcher(line);
 
         if (m.find()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            return LocalDateTime.parse(m.group(1), formatter);
+            return LocalDateTime.parse(line, formatter);
         } else {
             throw new IllegalArgumentException(line);
         }
@@ -77,7 +76,7 @@ public final class Parser {
      * - The message can contain any character.
      * - The message can be empty.
      *
-     * e.g.) "Happy New Year" from "2023-01-01 00:00:00 [INFO]: Happy New Year"
+     * (e.g.) "Happy New Year" from "2023-01-01 00:00:00 [INFO]: Happy New Year"
      *
      * @param line the line of the log
      * @return the extracted message
