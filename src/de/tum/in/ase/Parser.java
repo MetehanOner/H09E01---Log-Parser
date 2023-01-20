@@ -163,13 +163,14 @@ public final class Parser {
         List l = readFileInList(fileName);
 
         Iterator<String> itr = l.iterator();
-        while (itr.hasNext())
+        while (itr.hasNext()) {
             try {
                 Log log = parseLine(itr.next());
                 listLog.add(log);
             } catch (Exception e) {
                 System.err.println("Error: " + e.getMessage());
             }
+        }
 
         return listLog;
     }
