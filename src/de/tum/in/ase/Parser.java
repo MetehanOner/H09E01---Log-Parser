@@ -41,8 +41,8 @@ public final class Parser {
 
         if (m.find()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            OffsetDateTime odt = OffsetDateTime.parse ( line , formatter );
-            return odt.toLocalDateTime();
+            String inputModified = line.replace (" ", "T");
+            return LocalDateTime.parse(inputModified, formatter);
         } else {
             throw new IllegalArgumentException(line);
         }
