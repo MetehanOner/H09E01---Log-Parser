@@ -86,7 +86,7 @@ public final class Parser {
                 case "[DEBUG]" -> Level.DEBUG;
                 case "[WARN]" -> Level.WARN;
                 case "[ERROR]" -> Level.ERROR;
-                default -> throw new IllegalArgumentException(m.group(1));
+                default -> throw new IllegalArgumentException(line);
             };
             return l;
         } else {
