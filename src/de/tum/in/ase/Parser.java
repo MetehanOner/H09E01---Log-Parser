@@ -4,6 +4,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
@@ -40,12 +41,8 @@ public final class Parser {
         Matcher m = Pattern.compile(dateReg).matcher(line);
 
         if (m.find()) {
-            DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                    .appendPattern("yyyy-MM-dd-HH.mm.ss.SSSSSS")
-                    .parseLenient()
-                    .appendOffset("+HH:MM", "Z")
-                    .toFormatter();
-            return LocalDateTime.parse(line, formatter);
+            ZonedDateTime d = ZonedDateTime.parse(line);
+            return d.toLocalDateTime();
         } else {
             throw new IllegalArgumentException(line);
         }
