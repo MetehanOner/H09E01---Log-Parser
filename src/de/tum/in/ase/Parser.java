@@ -152,7 +152,7 @@ public final class Parser {
     public static @NonNull List<Log> parseLogFile(@NonNull String fileName) throws IOException {
         // TODO Task 2.2: Implement the method to parse the entire log file.
         List<Log> listLog = new ArrayList<>();
-        Pattern p = Pattern.compile("^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2}) \\[([A-Z]{4,5})\\] (?<=]: )(.*$)");
+        Pattern p = Pattern.compile("^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2}) \\[([A-Z]{4,5})\\]: .*$");
         try{
             FileInputStream fStream = new FileInputStream(fileName + ".log");
             BufferedReader br = new BufferedReader(new InputStreamReader(fStream));
